@@ -1,0 +1,34 @@
+{
+  "type": "module",
+  "name": "wanted-pre-onboarding-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "export NODE_ENV=production && node server.js",
+    "dev": "export NODE_ENV=development && nodemon --exec node server.js",
+    "test": "export NODE_ENV=test && jest --detectOpenHandles --forceExit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JangKroed/wanted-pre-onboarding-backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^29.6.2",
+    "node-mocks-http": "^1.12.2",
+    "nodemon": "^3.0.1",
+    "supertest": "^6.3.3"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.1",
+    "mysql2": "^3.5.2"
+  }
+}

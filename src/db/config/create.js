@@ -1,5 +1,5 @@
-const mysql2 = require('mysql2');
-const env = require('../../config.env');
+import mysql2 from 'mysql2';
+import env from '../../config.env';
 
 const { DB_HOST, DB_PORT, DB_USER, DB_PASSWORD } = env;
 

@@ -1,7 +1,7 @@
-const httpServer = require('./src/app.js');
-const sequelize = require('./src/db/config/connection.js');
-const associate = require('./src/db/config/associate');
-const env = require('./src/config.env.js');
+import httpServer from './src/app.js';
+import sequelize from './src/db/config/connection.js';
+import associate from './src/db/config/associate.js';
+import env from './src/config.env.js';
 
 httpServer.listen(env.PORT, () => {
   console.log(`SERVER RUNNING ON`, httpServer.address());
@@ -10,7 +10,7 @@ httpServer.listen(env.PORT, () => {
     sequelize
       .authenticate()
       .then(() => {
-        associate();
+        // associate();
         console.log('DB CONNECTED');
       })
       .catch((error) => {

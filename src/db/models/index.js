@@ -1,4 +1,4 @@
-const Users = require('./users.js');
-const Boards = require('./boards.js');
+import Users from './users.js';
+import Boards from './boards.js';
 
-module.exports = { Boards, Users };
+export { Boards, Users };

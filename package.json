@@ -1,5 +1,4 @@
 {
-  "type": "module",
   "name": "wanted-pre-onboarding-backend",
   "version": "1.0.0",
   "description": "",
@@ -7,7 +6,9 @@
   "scripts": {
     "start": "export NODE_ENV=production && node server.js",
     "dev": "export NODE_ENV=development && nodemon --exec node server.js",
-    "test": "export NODE_ENV=test && jest --detectOpenHandles --forceExit"
+    "test": "export NODE_ENV=test && jest --detectOpenHandles --forceExit",
+    "db:create": "node src/db/config/create.js",
+    "db:migrate": "node src/db/config/migrate.js"
   },
   "repository": {
     "type": "git",
@@ -29,6 +30,7 @@
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.1",
-    "mysql2": "^3.5.2"
+    "mysql2": "^3.5.2",
+    "sequelize": "^6.32.1"
   }
 }

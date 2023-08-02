@@ -1,7 +1,7 @@
-import express from 'express';
-import cookieParser from 'cookie-parser';
-import { createServer } from 'http';
-import router from './apis/routes/index.routes.js';
+const express = require('express');
+const cookieParser = require('cookie-parser');
+const { createServer } = require('http');
+const router = require('./apis/routes/index.routes.js');
 
 const app = express();
 const httpServer = createServer(app);
@@ -47,4 +47,4 @@ app.use((err, req, res, next) => {
   });
 });
 
-export default httpServer;
+module.exports = httpServer;

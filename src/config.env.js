@@ -1,5 +1,4 @@
-import dotenv from 'dotenv';
-dotenv.config();
+require('dotenv').config();
 
 class dBConnection {
   constructor() {
@@ -13,10 +12,11 @@ class dBConnection {
       production: 'PRD',
     };
 
-    this.DB_HOST = process.env[`${DB[this.NODE_ENV]}_HOST`];
-    this.DB_NAME = process.env[`${DB[this.NODE_ENV]}_NAME`];
-    this.DB_USER = process.env[`${DB[this.NODE_ENV]}_USER`];
-    this.DB_PASSWORD = process.env[`${DB[this.NODE_ENV]}_PASSWORD`];
+    this.DB_HOST = process.env[`DB_${DB[this.NODE_ENV]}_HOST`];
+    this.DB_NAME = process.env[`DB_${DB[this.NODE_ENV]}_NAME`];
+    this.DB_USER = process.env[`DB_${DB[this.NODE_ENV]}_USER`];
+    this.DB_PASSWORD = process.env[`DB_${DB[this.NODE_ENV]}_PASSWORD`];
+    this.DB_PORT = process.env[`DB_${DB[this.NODE_ENV]}_PORT`];
   }
 }
 
@@ -26,9 +26,11 @@ class Env extends dBConnection {
 
     this.HTTP = process.env.HTTP || 'http';
     this.PORT = Number(process.env.PORT);
+    this.ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
+    this.REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET;
 
     this.HOST = this.NODE_ENV === 'production' ? process.env.HOST || 'localhost' : 'localhost';
   }
 }
 
-export default new Env();
+module.exports = new Env();

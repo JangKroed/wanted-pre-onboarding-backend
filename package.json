@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "name": "wanted-pre-onboarding-backend",
   "version": "1.0.0",
   "description": "",

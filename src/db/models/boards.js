@@ -1,6 +1,5 @@
-'use strict';
-const { Sequelize, DataTypes, Model } = require('sequelize');
-const sequelize = require('../config/connection.js');
+import { Sequelize, DataTypes, Model } from 'sequelize';
+import sequelize from '../config/connection.js';
 
 class Boards extends Model {
   static associate(models) {
@@ -40,4 +39,4 @@ Boards.init(
   }
 );
 
-module.exports = Boards;
+export default Boards;

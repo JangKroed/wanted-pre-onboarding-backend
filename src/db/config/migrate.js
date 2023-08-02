@@ -1,5 +1,5 @@
-const sequelize = require('./connection');
-const models = require('../models');
+import sequelize from './connection.js';
+import * as models from '../models/index.js';
 
 (async () => {
   const modelList = Object.values(models);

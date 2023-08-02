@@ -1,4 +1,5 @@
-const AppError = require('../../utils/appError.js');
+import AppError from '../../utils/appError.js';
+import { Users } from '../../db/models/index.js';
 
 class UsersController {
   constructor() {}
@@ -10,9 +11,12 @@ class UsersController {
     return { email, password };
   };
 
-  signup = (req, res, next) => {
+  signup = async (req, res, next) => {
     try {
       const { email, password } = this.userValidation({ ...req.body, type: 'signup' });
+
+      const userInfo = await Users.create({ email, password, name: 'test' });
+      console.log(userInfo);
 
       res.status(201).send({ ok: true, message: 'signup success' });
     } catch (error) {
@@ -31,4 +35,4 @@ class UsersController {
   };
 }
 
-module.exports = UsersController;
+export default UsersController;

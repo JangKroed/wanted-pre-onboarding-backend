@@ -1,5 +1,5 @@
-const { Sequelize } = require('sequelize');
-const env = require('../../config.env.js');
+import { Sequelize } from 'sequelize';
+import env from '../../config.env.js';
 
 const { DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, DB_PORT, NODE_ENV } = env;
 
@@ -19,4 +19,4 @@ const sequelize = new Sequelize({
   },
 });
 
-module.export = sequelize;
+export default sequelize;

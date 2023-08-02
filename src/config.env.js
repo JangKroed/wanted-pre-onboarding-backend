@@ -1,4 +1,5 @@
-require('dotenv').config();
+import dotenv from 'dotenv';
+dotenv.config();
 
 class dBConnection {
   constructor() {
@@ -33,4 +34,4 @@ class Env extends dBConnection {
   }
 }
 
-module.exports = new Env();
+export default new Env();

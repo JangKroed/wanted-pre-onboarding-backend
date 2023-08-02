@@ -9,8 +9,14 @@ const sequelize = new Sequelize({
   username: DB_USER,
   password: DB_PASSWORD,
   port: DB_PORT,
-  dialect: 'mysql',
   logging: NODE_ENV === 'development' ? true : false,
+  timezone: '+09:00',
+  dialect: 'mysql',
+  dialectOptions: {
+    charset: 'utf8mb4',
+    dateStrings: true,
+    typeCast: true,
+  },
 });
 
 module.export = sequelize;

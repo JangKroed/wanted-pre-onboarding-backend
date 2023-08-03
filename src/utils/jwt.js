@@ -23,4 +23,12 @@ const verifyJwt = (token, secret) => {
   }
 };
 
-export { verifyJwt, accessTokenSign, refreshTokenSign };
+const decodedJwt = (token) => {
+  try {
+    return JWT.decode(token);
+  } catch (error) {
+    return null;
+  }
+};
+
+export { verifyJwt, decodedJwt, accessTokenSign, refreshTokenSign };

@@ -1,22 +1,22 @@
 import AppError from '../../utils/appError.js';
 import { Users } from '../../db/models/index.js';
+import { usersService } from '../../services/index.js';
 
 class UsersController {
   constructor() {}
 
   userValidation = ({ email, password, type }) => {
-    if (email.split('@').length > 2) throw new AppError(`${type} validation error.`, 400);
-    if (password.toString().length < 8) throw new AppError(`${type} validation error.`, 400);
-
-    return { email, password };
+    if (email.trim() && email.split('@').length > 2)
+      throw new AppError(`${type} validation error.`, 400);
+    else if (password.trim() && password.toString().length < 8)
+      throw new AppError(`${type} validation error.`, 400);
   };
 
   signup = async (req, res, next) => {
     try {
-      const { email, password } = this.userValidation({ ...req.body, type: 'signup' });
+      this.userValidation({ ...req.body, type: 'signup' });
 
-      const userInfo = await Users.create({ email, password, name: 'test' });
-      console.log(userInfo);
+      const userInfo = await usersService.signup(req.body);
 
       res.status(201).send({ ok: true, message: 'signup success' });
     } catch (error) {
@@ -24,11 +24,13 @@ class UsersController {
     }
   };
 
-  login = (req, res, next) => {
+  login = async (req, res, next) => {
     try {
-      const { email, password } = this.userValidation({ ...req.body, type: 'signup' });
+      this.userValidation({ ...req.body, type: 'login' });
 
-      res.status(200).json({ ok: true, message: 'login success' });
+      const { accessToken } = await usersService.login(req.body);
+
+      res.status(200).json({ ok: true, message: 'login success', accessToken });
     } catch (error) {
       next(error);
     }

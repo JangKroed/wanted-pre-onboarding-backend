@@ -1,10 +1,9 @@
 import AppError from '../../utils/appError.js';
 import { Users } from '../../db/models/index.js';
 import { usersService } from '../../services/index.js';
+import { cookieOption } from '../middlewares/auth.middleware.js';
 
 class UsersController {
-  constructor() {}
-
   userValidation = ({ email, password, type }) => {
     if (email.trim() && email.split('@').length > 2)
       throw new AppError(`${type} validation error.`, 400);
@@ -28,7 +27,10 @@ class UsersController {
     try {
       this.userValidation({ ...req.body, type: 'login' });
 
-      const { accessToken } = await usersService.login(req.body);
+      const { accessToken, refreshToken } = await usersService.login(req.body);
+
+      res.cookie('accessToken', accessToken, cookieOption);
+      res.cookie('refreshToken', refreshToken, cookieOption);
 
       res.status(200).json({ ok: true, message: 'login success', accessToken });
     } catch (error) {

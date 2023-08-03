@@ -28,11 +28,11 @@ Users.init(
       allowNull: false,
     },
     password: {
-      type: DataTypes.STRING(20),
+      type: DataTypes.STRING(100),
       allowNull: false,
     },
     refreshToken: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.STRING,
       allowNull: true,
     },
   },

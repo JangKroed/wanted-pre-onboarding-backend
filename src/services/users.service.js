@@ -4,8 +4,6 @@ import { usersRepository } from '../db/repositories/index.js';
 import AppError from '../utils/appError.js';
 
 class UsersService {
-  constructor() {}
-
   signup = async (userInfo) => {
     const hasEmail = await usersRepository.findByEmail(userInfo.email);
     if (hasEmail) throw new AppError('exist email', 400);
@@ -28,7 +26,7 @@ class UsersService {
 
     hasUser.save();
 
-    return { accessToken };
+    return { accessToken, refreshToken: hasUser.refreshToken };
   };
 }
 

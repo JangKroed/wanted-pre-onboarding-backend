@@ -1,0 +1,32 @@
+name: project-cicd
+
+on:
+  push:
+    branches: ['main']
+
+jobs:
+  test:
+    name: CI Pipeline
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        node-version: [18.16.1]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      - run: npm ci
+      - name: Create env file
+        run: |
+          touch .env
+          cat << EOF >> .env
+          ${{ secrets.ENV }}
+      - name: Install Testing Packages
+        run: npm install --save-dev jest node-mocks-http supertest
+
+      - name: Run Test
+        run: npm run test

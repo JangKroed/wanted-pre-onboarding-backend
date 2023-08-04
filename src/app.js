@@ -43,7 +43,7 @@ app.use((err, req, res, next) => {
 
   res.status(err.status).json({
     status: err.status,
-    msg: err.message,
+    message: err.message,
   });
 });
 

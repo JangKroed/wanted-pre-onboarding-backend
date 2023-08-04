@@ -11,7 +11,7 @@ class UsersService {
     const hashed = await bcrypt.hash(userInfo.password, 10);
     userInfo.password = hashed;
 
-    return await usersRepository.createUser(userInfo);
+    await usersRepository.createUser(userInfo);
   };
 
   login = async ({ email, password }) => {

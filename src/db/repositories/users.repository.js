@@ -4,7 +4,7 @@ class UsersRepository {
   constructor() {}
 
   createUser = async (userInfo) => {
-    return await Users.create(userInfo);
+    await Users.create(userInfo);
   };
 
   findByEmail = async (email) => {

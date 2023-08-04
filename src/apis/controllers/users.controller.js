@@ -15,9 +15,9 @@ class UsersController {
     try {
       this.userValidation({ ...req.body, type: 'signup' });
 
-      const userInfo = await usersService.signup(req.body);
+      await usersService.signup(req.body);
 
-      res.status(201).send({ ok: true, message: 'signup success' });
+      res.status(201).json({ ok: true, message: 'signup success' });
     } catch (error) {
       next(error);
     }

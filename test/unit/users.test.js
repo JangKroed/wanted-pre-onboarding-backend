@@ -2,26 +2,10 @@ import httpMocks from 'node-mocks-http';
 import { usersController } from '../../src/apis/controllers/index.js';
 import { usersService } from '../../src/services/index.js';
 import AppError from '../../src/utils/appError.js';
+import { newUser, loginUser, usersServiceReturnValue } from '../data/user.data.js';
 
 usersService.signup = jest.fn();
 usersService.login = jest.fn();
-
-const newUser = {
-  email: 'test@gmail.com',
-  name: 'test',
-  password: '1q2w3e4r',
-};
-
-const loginUser = {
-  email: 'test@gmail.com',
-  password: '1q2w3e4r',
-};
-
-const usersServiceReturnValue = {
-  ok: true,
-  message: 'login success',
-  accessToken: '',
-};
 
 let req, res, next;
 
@@ -31,7 +15,7 @@ beforeEach(() => {
   next = jest.fn();
 });
 
-describe('Users Controller Layer Signup Test', () => {
+describe('Users Controller Signup', () => {
   beforeEach(() => {
     req.body = newUser;
   });
@@ -77,7 +61,7 @@ describe('Users Controller Layer Signup Test', () => {
   });
 });
 
-describe('Users Controller Layer Login Test', () => {
+describe('Users Controller Login', () => {
   beforeEach(() => {
     req.body = loginUser;
   });
@@ -86,7 +70,7 @@ describe('Users Controller Layer Login Test', () => {
     expect(typeof usersController.login).toBe('function');
   });
 
-  it('should call usersController.login', async () => {
+  it('should call usersService.login', async () => {
     await usersController.login(req, res, next);
 
     expect(usersService.login).toHaveBeenCalledWith(loginUser);

@@ -137,7 +137,7 @@ curl http://localhost:3032/api/boards/ \
 **게시글 목록조회**
 
 ```bash
-curl 'http://localhost:3032/api/boards/?pageNum=1'
+curl http://localhost:3032/api/boards/?pageNum=1
 ```
 
 **게시글 상세조회**

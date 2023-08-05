@@ -1,5 +1,5 @@
 import mysql2 from 'mysql2';
-import env from '../../config.env';
+import env from '../../config.env.js';
 
 const { DB_HOST, DB_PORT, DB_USER, DB_PASSWORD } = env;
 

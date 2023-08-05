@@ -1,10 +1,10 @@
 import request from 'supertest';
 import app from '../../src/app.js';
 import sequelize from '../../src/db/config/connection.js';
-import {Users,Boards} from '../../src/db/repositories/index.js'
+import { Users, Boards } from '../../src/db/models/index.js';
 
 describe('Integration Test Start', () => {
-  afterAll(() => {
+  afterAll(async () => {
     await Users.destroy({ where: {} });
     await Boards.destroy({ where: {} });
   });

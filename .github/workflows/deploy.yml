@@ -63,9 +63,8 @@ jobs:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build --no-cache -t $ECR_REGISTRY/wanted_server:$IMAGE_TAG .
-          docker push $ECR_REGISTRY/wanted_server:$IMAGE_TAG
-          echo "image=$ECR_REGISTRY/wanted_server:$IMAGE_TAG" >> $GITHUB_ENV
+          docker build --no-cache -t $ECR_REGISTRY/wanted_server_prac:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/wanted_server_prac:$IMAGE_TAG
 
       - name: Install Docker Compose
         run: |

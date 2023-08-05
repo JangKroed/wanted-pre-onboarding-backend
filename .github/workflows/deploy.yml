@@ -63,7 +63,7 @@ jobs:
           ECR_REGISTRY: ${{ secrets.DOCKER_REGISTRY_URL }}
         run: |
           docker build -t $ECR_REGISTRY/wanted_server .
-          docker login -u AWS -p $(aws ecr get-login-password --region us-east-1) $ECR_REGISTRY
+          docker login -u AWS -p $(aws ecr get-login-password --region ap-northeast-2) $ECR_REGISTRY
           docker push $ECR_REGISTRY/wanted_server
 
       - name: Install Docker Compose

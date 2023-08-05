@@ -48,7 +48,8 @@ jobs:
       - name: Install Docker
         run: |
           sudo apt-get update
-          sudo apt-get -y install docker.io
+          sudo apt-get install -y containerd
+          sudo apt-get install -y docker.io
 
       - name: Build and push Docker image
         env:

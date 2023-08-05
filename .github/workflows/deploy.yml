@@ -37,7 +37,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [18.15.0]
+        node-version: [18.16.1]
     needs: test
     steps:
       - uses: actions/checkout@v3
@@ -54,8 +54,6 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-      - name: Run build
-        run: npm run build
 
       - name: zip file
         run: zip -r cicdtest.zip ./src ./server.js ./scripts ./appspec.yml ./.env ./package.json

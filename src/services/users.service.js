@@ -1,4 +1,4 @@
-import { verifyJwt, accessTokenSign, refreshTokenSign } from '../utils/jwt.js';
+import { accessTokenSign, refreshTokenSign } from '../utils/jwt.js';
 import bcrypt from 'bcrypt';
 import { usersRepository } from '../db/repositories/index.js';
 import AppError from '../utils/appError.js';

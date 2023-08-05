@@ -1,7 +1,7 @@
 import httpMocks from 'node-mocks-http';
-import { boardsController } from '../../src/apis/controllers/index.js';
-import { boardsService } from '../../src/services/index.js';
-import AppError from '../../src/utils/appError.js';
+import { boardsController } from '../../../src/apis/controllers/index.js';
+import { boardsService } from '../../../src/services/index.js';
+import AppError from '../../../src/utils/appError.js';
 
 boardsService.createBoard = jest.fn();
 boardsService.getBoardList = jest.fn();

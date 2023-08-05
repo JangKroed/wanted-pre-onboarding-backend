@@ -1,0 +1,20 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    ports:
+      - 3310:3310
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+
+  server:
+    image: wanted_server
+    build:
+      dockerfile: ./Dockerfile
+    env_file:
+      - ./.env
+    ports:
+      - '3032:3032'

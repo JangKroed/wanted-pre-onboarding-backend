@@ -82,6 +82,11 @@ describe('Integration Test Start', () => {
 
       const response = await request(app).post('/api/users/login').send(user);
       accessToken = response.body.accessToken;
+
+      await request(app)
+        .post('/api/boards')
+        .set('Cookie', [`accessToken=${accessToken}`])
+        .send(newBoard);
     });
 
     it('should create a new board', async () => {

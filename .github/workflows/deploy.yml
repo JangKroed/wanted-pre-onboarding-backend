@@ -59,7 +59,6 @@ jobs:
           ECR_REGISTRY: ${{ secrets.DOCKER_REGISTRY_URL }}
           IMAGE_TAG: latest # 빌드한 이미지에 태그를 지정
         run: |
-          echo ${{ secrets.DOCKER_REGISTRY_URL }}
           docker build -t $ECR_REGISTRY/wanted_server:$IMAGE_TAG .
           docker login -u AWS -p $(aws ecr get-login-password --region ap-northeast-2) $ECR_REGISTRY
           docker push $ECR_REGISTRY/wanted_server:$IMAGE_TAG

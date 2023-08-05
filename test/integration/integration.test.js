@@ -78,18 +78,9 @@ describe('Integration Test Start', () => {
         name: 'test user',
         password: 'testpassword',
       };
-      // await request(app).post('/api/users/signup').send(user);
 
       const response = await request(app).post('/api/users/login').send(user);
       accessToken = response.body.accessToken;
-
-      await request(app)
-        .post('/api/boards')
-        .set('Cookie', [`accessToken=${accessToken}`])
-        .send({
-        title: 'Test Board',
-        contents: 'This is a test board.',
-      });
     });
 
     it('should create a new board', async () => {

@@ -86,7 +86,10 @@ describe('Integration Test Start', () => {
       await request(app)
         .post('/api/boards')
         .set('Cookie', [`accessToken=${accessToken}`])
-        .send(newBoard);
+        .send({
+        title: 'Test Board',
+        contents: 'This is a test board.',
+      });
     });
 
     it('should create a new board', async () => {

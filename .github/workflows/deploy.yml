@@ -35,10 +35,8 @@ jobs:
     name: CD Pipeline
     runs-on: ubuntu-20.04
 
-    strategy:
-      matrix:
-        node-version: [18.16.1]
     needs: test
+
     steps:
       - uses: actions/checkout@v3
       - name: Create env file
@@ -46,31 +44,74 @@ jobs:
           touch .env
           cat << EOF >> .env
           ${{ secrets.ENV }}
-      - name: Install Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'npm'
 
-      - name: Install dependencies
-        run: npm install
+      - name: Install Docker
+        run: |
+          sudo apt-get update
+          sudo apt-get -y install docker.io
 
-      - name: zip file
-        run: zip -r cicdtest.zip ./src ./server.js ./scripts ./appspec.yml ./.env ./package.json
+      - name: Build and push Docker image
+        env:
+          ECR_REGISTRY: ${{ secrets.DOCKER_REGISTRY_URL }}
+        run: |
+          docker build -t $ECR_REGISTRY/wanted_server .
+          docker login -u AWS -p $(aws ecr get-login-password --region ap-northeast-2) $ECR_REGISTRY
+          docker push $ECR_REGISTRY/wanted_server
 
-      - name: AWS connect
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-northeast-2
+      - name: Install Docker Compose
+        run: |
+          sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+          sudo chmod +x /usr/local/bin/docker-compose
 
-      - name: upload to S3
-        run: aws s3 cp --region ap-northeast-2 ./cicdtest.zip s3://wanted-bulid-s3/build/
+      - name: Deploy with Docker Compose
+        env:
+          ECR_REGISTRY: ${{ secrets.DOCKER_REGISTRY_URL }}
+        run: |
+          docker-compose -f ./docker-compose.yml up -d
 
-      - name: deploy with AWS codeDeploy
-        run: aws deploy create-deployment
-          --application-name codedeploy-app
-          --deployment-config-name CodeDeployDefault.OneAtATime
-          --deployment-group-name codedeploy-group
-          --s3-location bucket=wanted-bulid-s3,bundleType=zip,key=build/cicdtest.zip
+  # deploy:
+  #   name: CD Pipeline
+  #   runs-on: ubuntu-20.04
+
+  #   needs: test
+
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
+
+  #     - name: Configure AWS credentials
+  #       uses: aws-actions/configure-aws-credentials@v1
+  #       with:
+  #         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  #         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  #         aws-region: ap-northeast-2
+
+  #     - name: Login to Amazon ECR
+  #       id: login-ecr
+  #       uses: aws-actions/amazon-ecr-login@v1
+
+  #     - name: Build, tag, and push image to Amazon ECR
+  #       id: build-image
+  #       env:
+  #         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+  #         IMAGE_TAG: ${{ github.sha }}
+  #       run: |
+  #         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+  #         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+  #         echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_ENV
+
+  #     - name: Fill in the new image ID in the Amazon ECS task definition
+  #       id: task-def
+  #       uses: aws-actions/amazon-ecs-render-task-definition@v1
+  #       with:
+  #         task-definition: ${{ secrets.ECS_TASK_DEFINITION }}
+  #         container-name: ${{ secrets.CONTAINER_NAME }}
+  #         image: ${{ steps.build-image.outputs.image }}
+
+  #     - name: Deploy Amazon ECS task definition
+  #       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+  #       with:
+  #         task-definition: ${{ steps.task-def.outputs.task-definition }}
+  #         service: ${{ secrets.ECS_SERVICE }}
+  #         cluster: ${{ secrets.ECS_CLUSTER }}
+  #         wait-for-service-stability: true

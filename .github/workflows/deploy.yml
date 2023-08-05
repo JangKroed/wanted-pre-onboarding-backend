@@ -85,8 +85,12 @@ jobs:
 
       - name: Copy Docker Compose file to EC2
         run: |
-          scp -o StrictHostKeyChecking=no ./docker-compose.yml user@43.201.98.6:/home/ubuntu/
+          echo "$PRIVATE_KEY" > private-key.pem
+          chmod 400 private-key.pem
+          scp -i private-key.pem ./docker-compose.yml user@43.201.98.6:/home/ubuntu/
 
       - name: SSH into EC2 and deploy
         run: |
-          ssh user@43.201.98.6 'cd /home/ubuntu/ && docker-compose up -d'
+          echo "$PRIVATE_KEY" > private-key.pem
+          chmod 400 private-key.pem
+          ssh -i private-key.pem user@43.201.98.6 'cd /home/ubuntu/ && docker-compose up -d

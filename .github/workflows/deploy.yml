@@ -30,3 +30,49 @@ jobs:
 
       - name: Run Test
         run: npm run test
+
+  deploy:
+    name: CD Pipeline
+    runs-on: ubuntu-20.04
+
+    strategy:
+      matrix:
+        node-version: [18.15.0]
+    needs: test
+    steps:
+      - uses: actions/checkout@v3
+      - name: Create env file
+        run: |
+          touch .env
+          cat << EOF >> .env
+          ${{ secrets.ENV }}
+      - name: Install Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+      - name: Run build
+        run: npm run build
+
+      - name: zip file
+        run: zip -r cicdtest.zip ./src ./server.js ./scripts ./appspec.yml ./.env ./package.json
+
+      - name: AWS connect
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-2
+
+      - name: upload to S3
+        run: aws s3 cp --region ap-northeast-2 ./cicdtest.zip s3://build-S3/build/
+
+      - name: deploy with AWS codeDeploy
+        run: aws deploy create-deployment
+          --application-name codedeploy-app
+          --deployment-config-name CodeDeployDefault.OneAtATime
+          --deployment-group-name codedeploy-group
+          --s3-location bucket=build-S3,bundleType=zip,key=build/cicdtest.zip

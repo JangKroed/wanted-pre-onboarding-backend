@@ -79,6 +79,12 @@ export NODE_ENV=test && npm run db:create && npm run db:migrate
 npm start
 ```
 
+테스트 코드 실행
+
+```
+npm run test
+```
+
 <hr/>
 
 #### Docker Compose

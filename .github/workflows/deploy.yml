@@ -85,7 +85,7 @@ jobs:
 
       - name: Copy Docker Compose file to EC2
         run: |
-          scp ./docker-compose.yml user@43.201.98.6:/home/ubuntu/
+          scp -o StrictHostKeyChecking=no ./docker-compose.yml user@43.201.98.6:/home/ubuntu/
 
       - name: SSH into EC2 and deploy
         run: |

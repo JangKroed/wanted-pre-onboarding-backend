@@ -3,7 +3,7 @@ import app from '../../src/app.js';
 import sequelize from '../../src/db/config/connection.js';
 
 describe('Integration Test - Users Controller', () => {
-  beforeAll(() => {
+  afterAll(() => {
     sequelize.sync({ force: true });
   });
 

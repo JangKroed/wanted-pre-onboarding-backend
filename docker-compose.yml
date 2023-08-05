@@ -2,25 +2,15 @@ version: '3'
 
 services:
   server:
-    image: <YOUR_ECR_REGISTRY_URL>/wanted_server:latest
+    image: ${ECR_REGISTRY_URL}/wanted_server_prac:latest
     ports:
       - '80:3032'
     restart: always
-    depends_on:
-      - db
-    environment:
-      - DB_PRD_HOST=db
-      - DB_PRD_USER=${MYSQL_USER}
-      - DB_PRD_PASSWORD=${MYSQL_PASSWORD}
-      - DB_PRD_NAME=${MYSQL_DATABASE}
+    env_file:
+      - ./.env
 
   db:
     image: mysql:8.0
     restart: always
-    environment:
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      - MYSQL_USER=${MYSQL_USER}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
     ports:
       - '3010:3306'

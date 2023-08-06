@@ -40,6 +40,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      - name: Create pem file
+        run: |
+          touch private-key.pem
+          cat << EOF >> private-key.pem
+          ${{ secrets.PRIVATE_KEY }}
+
       - name: Create env file
         run: |
           touch .env
@@ -85,12 +91,8 @@ jobs:
 
       - name: Copy Docker Compose file to EC2
         run: |
-          echo "$PRIVATE_KEY" > private-key.pem
-          chmod 400 private-key.pem
-          scp -i private-key.pem ./docker-compose.yml ubuntu@43.201.98.6:/home/ubuntu/
+          scp -i ./private-key.pem ./docker-compose.yml ubuntu@43.201.98.6:/home/ubuntu/
 
       - name: SSH into EC2 and deploy
         run: |
-          echo "$PRIVATE_KEY" > private-key.pem
-          chmod 400 private-key.pem
-          ssh -i private-key.pem ubuntu@43.201.98.6 'cd /home/ubuntu/ && docker-compose up -d
+          ssh -i ./private-key.pem ubuntu@43.201.98.6 'cd /home/ubuntu/ && docker-compose up -d

@@ -96,6 +96,7 @@ jobs:
         run: |
           chmod 400 private-key.pem
           scp -i private-key.pem -o StrictHostKeyChecking=no ./docker-compose.yml ubuntu@43.201.98.6:/home/ubuntu/
+          scp -i private-key.pem -o StrictHostKeyChecking=no ./.env ubuntu@43.201.98.6:/home/ubuntu/
 
       - name: SSH into EC2 and deploy
         run: |

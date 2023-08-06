@@ -85,6 +85,10 @@ npm start
 npm run test
 ```
 
+테스트 커버리지
+
+[image](https://blog.kakaocdn.net/dn/cAukoA/btsp8WZvmbS/kF65Ks1yfanWOliaEznPMk/img.png)
+
 <hr/>
 
 #### Docker Compose
@@ -198,4 +202,4 @@ curl --request DELETE http://localhost:3032/api/boards/:boardId \
 
 **[🏠: http://43.201.98.6/](http://43.201.98.6/)**<br/>
 
-![image](https://blog.kakaocdn.net/dn/bEbmai/btsp64w2eMq/izwvSaxY1ak66aVgIAKgQ1/img.png)
+![image](https://blog.kakaocdn.net/dn/p8voe/btsp8XxkHzY/FRVwVhbiicLbeKd4SAhEaK/img.png)

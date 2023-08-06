@@ -183,7 +183,7 @@ curl --request DELETE http://localhost:3032/api/boards/:boardId \
 
 ### 4. 구현한 API의 동작을 촬영한 데모 영상 링크
 
-**[✨: 보러가기](https://)**<br/>
+**[✨: 보러가기](https://youtu.be/LOx8ibDPl0Q)**<br/>
 
 ### 5. 구현 방법 및 이유에 대한 간략한 설명
 

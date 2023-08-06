@@ -5,9 +5,9 @@ import { cookieOption } from '../middlewares/auth.middleware.js';
 
 class UsersController {
   userValidation = ({ email, password, type }) => {
-    if (email.trim() && email.split('@').length !== 2)
+    if (!email.trim().length || email.split('@').length !== 2)
       throw new AppError(`${type} validation error.`, 400);
-    else if (password.trim() && password.toString().length < 8)
+    else if (!password.trim().length || password.toString().length < 8)
       throw new AppError(`${type} validation error.`, 400);
   };
 

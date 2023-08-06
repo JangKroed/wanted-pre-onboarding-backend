@@ -32,6 +32,9 @@ jobs:
       - name: Run Test
         run: npm run test
 
+      - name: Test Database init
+        run: npm run db:migrate
+
   deploy:
     name: CD Pipeline
     runs-on: ubuntu-20.04
@@ -92,8 +95,8 @@ jobs:
 
       - name: Copy Docker Compose file to EC2
         run: |
-          scp -i private-key.pem ./docker-compose.yml ubuntu@43.201.98.6:/home/ubuntu/
+          scp -i private-key.pem -o StrictHostKeyChecking=no ./docker-compose.yml ubuntu@43.201.98.6:/home/ubuntu/
 
       - name: SSH into EC2 and deploy
         run: |
-          ssh -i private-key.pem ubuntu@43.201.98.6 'cd /home/ubuntu/ && docker-compose up -d
+          ssh -i private-key.pem -o StrictHostKeyChecking=no ubuntu@43.201.98.6 'cd /home/ubuntu/ && docker-compose up -d

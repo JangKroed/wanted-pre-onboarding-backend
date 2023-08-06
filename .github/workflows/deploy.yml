@@ -71,14 +71,12 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
-      - name: Build, tag, and push image to Amazon ECR
-        id: build-image
+      - name: Build and push image to Amazon ECR
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build --no-cache -t $ECR_REGISTRY/wanted_server_prac:$IMAGE_TAG .
-          docker push $ECR_REGISTRY/wanted_server_prac:$IMAGE_TAG
+          docker build --no-cache -t $ECR_REGISTRY/wanted_server_prac:latest .
+          docker push $ECR_REGISTRY/wanted_server_prac:latest
 
       - name: Install Docker Compose
         run: |
@@ -88,7 +86,6 @@ jobs:
       - name: Deploy with Docker Compose
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          IMAGE_TAG: ${{ github.sha }} # 배포할 이미지의 태그를 지정
         run: |
           docker-compose up -d
 

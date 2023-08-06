@@ -46,9 +46,9 @@ jobs:
       - name: Create pem file
         run: |
           touch private-key.pem
+          sudo chmod 400 private-key.pem
           cat << EOF >> private-key.pem
           ${{ secrets.PRIVATE_KEY }}
-          sudo chmod 400 private-key.pem
 
       - name: Create env file
         run: |

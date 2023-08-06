@@ -2,7 +2,7 @@ version: '3'
 
 services:
   server:
-    image: ${ECR_REGISTRY_URL}/wanted_server_prac:latest
+    image: ${ECR_REGISTRY_URL}/wanted_server_prac
     ports:
       - '80:3032'
     restart: always

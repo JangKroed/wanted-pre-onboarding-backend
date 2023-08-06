@@ -100,4 +100,4 @@ jobs:
       - name: SSH into EC2 and deploy
         run: |
           chmod 400 private-key.pem
-          ssh -i private-key.pem -o StrictHostKeyChecking=no ubuntu@43.201.98.6 'cd /home/ubuntu/ && docker-compose up -d
+          ssh -i private-key.pem -o StrictHostKeyChecking=no ubuntu@43.201.98.6 'cd /home/ubuntu/ && docker-compose up -d'

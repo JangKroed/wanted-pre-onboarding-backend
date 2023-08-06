@@ -196,7 +196,7 @@ curl --request DELETE http://localhost:3032/api/boards/:boardId \
 
 ### 6. API 명세(request/response 포함)
 
-![image](https://blog.kakaocdn.net/dn/OGCMx/btsp6qNNb6l/nXRrg5lzFQeq44JAS0fQJk/img.png)
+![image](https://blog.kakaocdn.net/dn/urOzD/btsp3lM66Xm/BpLcQaaKXaUGkMlXHVpFMK/img.png)
 
 ### 7. 클라우드 환경에 배포 환경을 설계하고 애플리케이션을 배포
 

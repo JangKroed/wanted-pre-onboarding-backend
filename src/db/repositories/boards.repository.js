@@ -12,7 +12,10 @@ class BoardsRepository {
     return await Boards.findAll({
       offset,
       limit: this.pageSize,
-      order: [['createdAt', 'DESC']], // 게시글을 생성일자 내림차순으로 정렬합니다.
+      attributes: {
+        exclude: ['contents'],
+      },
+      order: [['createdAt', 'DESC']],
     });
   };
 

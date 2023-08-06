@@ -26,6 +26,9 @@ describe('BoardsRepository', () => {
       expect(Boards.findAll).toHaveBeenCalledWith({
         offset: 0,
         limit: 5,
+        attributes: {
+          exclude: ['contents'],
+        },
         order: [['createdAt', 'DESC']],
       });
     });

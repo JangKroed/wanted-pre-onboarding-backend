@@ -29,11 +29,11 @@ jobs:
       - name: Install Testing Packages
         run: npm install --save-dev jest node-mocks-http supertest
 
+      - name: Test Database init
+        run: export NODE_ENV=test && npm run db:migrate
+
       - name: Run Test
         run: npm run test
-
-      - name: Test Database init
-        run: npm run db:migrate
 
   deploy:
     name: CD Pipeline

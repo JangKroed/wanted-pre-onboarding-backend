@@ -87,7 +87,7 @@ npm run test
 
 테스트 커버리지
 
-[image](https://blog.kakaocdn.net/dn/cAukoA/btsp8WZvmbS/kF65Ks1yfanWOliaEznPMk/img.png)
+![image](https://blog.kakaocdn.net/dn/cAukoA/btsp8WZvmbS/kF65Ks1yfanWOliaEznPMk/img.png)
 
 <hr/>
 
